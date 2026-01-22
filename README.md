@@ -21,12 +21,39 @@ linked lists are a very powerfull alternative to an array of strings (char **).
 
 ## Important Notions
 
-### Linked lists
+### 1. Dynamic Size Without Reallocation **With linked lists:** You can
+allocate memory on-the-fly as you parse each dictionary line. Each valid entry
+becomes a new node, and you append it immediately without knowing the total
+count upfront. **With arrays:** You face two bad choices:
+- Read the file twice (once to count lines, once to parse) - wasteful
+- Pre-allocate a huge array and waste memory - inefficient
+- Need to realloc (implement something similar to realloc()) repeatedly as you parse - expensive O(n) copying 
+(meaning the more you reallocate, the more time it takes, because you have to get the old pointers, and the new ones)
 
-This is typically a project where using linked lists is more convenient than using an array of strings. Here are the reasons:
+In this
+  project , we parse line-by-line and reject
+  invalid/duplicate entries on-the-fly. Linked lists handle this naturally with
+  zero overhead.
 
-* Dynamic size allocation.
-With the linked lists you can allocate the exact size of you dictionnary, meaning you have exactly as many nodes allocated as there are, in our case, lines in your dictionnary.
-If you were to use an array of strings, you'd either have to read the file once, get the number of line then allocate, or you'd have to allocate something way bigger than what 
-you actually need, then (because we want to something clean) reallocate it after cleaning every empty array. Wherease with linked lists, you can parse and allocate on the fly.
-AND THAT'S NOT ALL! The structured data that comes with linked lists makes the codebase so much clearer.
+### 2. Structured Data with Type Safety **With linked lists:** Each node is a
+proper structure containing both the numeric key AND its word value together:
+```c
+typedef struct s_dict_pair { unsigned long    nbr;      // The number(e.g., 42) 
+char            *value;    // The word (e.g., "forty two") struct
+s_dict_pair *next; } t_dict_pair; 
+``` 
+This means:
+- The compiler enforces type safety: nbr is always a number, value is always a
+  string
+- Related data stays together - you can't accidentally misalign them
+- Code is self-documenting: entry->nbr and entry->value are crystal clear.With
+  arrays: You either maintain parallel arrays (unsigned long keys[] and char
+  *values[]) which can get out of sync, or you store everything as strings
+  ("42:forty two") and parse repeatedly during lookups - both approaches are
+  error-prone and inefficient.
+
+
+---
+
+Everything else in the codebase is just personnal preferences, I used a recursive function for my algorithm, didn't have to
+but it was fun. There surely is an easier to approach method to solve the problem.
