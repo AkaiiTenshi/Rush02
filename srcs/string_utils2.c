@@ -6,7 +6,7 @@
 /*   By: salsoysa <salsoysa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 22:36:24 by salsoysa          #+#    #+#             */
-/*   Updated: 2026/01/22 15:53:47 by salsoysa         ###   ########.fr       */
+/*   Updated: 2026/01/22 17:38:32 by salsoysa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_all_digits(char *str)
 unsigned long	str_to_ulong(char *str)
 {
 	unsigned long long	result;
-	int				i;
+	int					i;
 
 	if (!str)
 		return (0);

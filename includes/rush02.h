@@ -21,7 +21,7 @@
 // Data Strucutures
 typedef struct s_dict_pair
 {
-	unsigned long		nbr;
+	char				*key;
 	char				*value;
 	struct s_dict_pair	*next;
 }						t_dict_pair;
@@ -69,9 +69,9 @@ void					free_lines(char **lines);
 
 // Dictionary utilities (dict_foos.c)
 t_dict					*create_empty_dictionary(void);
-t_dict_pair				*create_entry(unsigned long key, char *value);
+t_dict_pair				*create_entry(char *key, char *value);
 void					add_entry(t_dict *dict, t_dict_pair *entry);
-int						key_exists(t_dict *dict, unsigned long key);
+int						key_exists(t_dict *dict, char *key);
 void					free_dictionary(t_dict *dict);
 
 // Dictionary parsing (dict_pars.c)
@@ -80,20 +80,29 @@ t_dict_pair				*parse_dictionary_line(char *line);
 t_dict					*parse_dictionary_content(char *content);
 
 // Number conversion (algo.c)
-char					*lookup_value(t_dict *dict, unsigned long key);
-unsigned long			find_largest_key_below(t_dict *dict,
-							unsigned long number);
-char					*convert_number(unsigned long number, t_dict *dict);
+char					*lookup_value(t_dict *dict, char *key);
+char					*find_largest_key_below(t_dict *dict, char *number);
+char					*convert_number(char *number, t_dict *dict);
 char					*number_to_words(char *number_str, t_dict *dict);
 
 // Additional string utility
 int						ft_strcmp(const char *s1, const char *s2);
 
 // Algo utils
-char					*process_remainder(unsigned long number,
-							unsigned long scale, t_dict *dict, char *result);
-char					*process_large_scale(unsigned long number,
-							unsigned long scale, t_dict *dict, char *result);
+char					*process_remainder(char *number, char *scale,
+							t_dict *dict, char *result);
+char					*process_large_scale(char *number, char *scale,
+							t_dict *dict, char *result);
 char					*get_zero_value(t_dict *dict);
+
+// String comparison (string_compare.c)
+int						compare_number_strings(char *n1, char *n2);
+int						is_power_of_ten(char *str);
+char					*trim_leading_zeros(char *str);
+
+// String math (string_math.c)
+char					*divide_by_power_of_10(char *number, char *divisor);
+char					*modulo_by_power_of_10(char *number, char *divisor);
+char					*subtract_strings(char *n1, char *n2);
 
 #endif

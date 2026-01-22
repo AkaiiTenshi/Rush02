@@ -16,6 +16,8 @@ void	free_entry(t_dict_pair *entry)
 {
 	if (!entry)
 		return ;
+	if (entry->key)
+		free(entry->key);
 	if (entry->value)
 		free(entry->value);
 	free(entry);
@@ -50,7 +52,7 @@ t_dict_pair	*parse_dictionary_line(char *line)
 {
 	char			**parts;
 	char			*colon;
-	unsigned long	key;
+	char			*key;
 	t_dict_pair		*entry;
 
 	colon = ft_strchr(line, ':');
@@ -61,8 +63,9 @@ t_dict_pair	*parse_dictionary_line(char *line)
 		return (NULL);
 	if (!is_all_digits(parts[1]) || !parts[0][0])
 		return (free(parts[0]), free(parts[1]), free(parts), NULL);
-	key = str_to_ulong(parts[1]);
+	key = trim_leading_zeros(parts[1]);
 	entry = create_entry(key, parts[0]);
+	free(key);
 	free(parts[0]);
 	free(parts[1]);
 	free(parts);
@@ -78,7 +81,7 @@ static int	process_line(t_dict *dict, char *line)
 	entry = parse_dictionary_line(line);
 	if (!entry)
 		return (0);
-	if (key_exists(dict, entry->nbr))
+	if (key_exists(dict, entry->key))
 	{
 		free_entry(entry);
 		return (0);

@@ -6,7 +6,8 @@ INC = -I includes
 SRC = srcs/main.c srcs/parsing.c srcs/algo.c srcs/read_utils.c \
 	  srcs/string_utils.c srcs/string_utils2.c srcs/line_foos.c \
 	  srcs/dict_foos.c srcs/dict_pars.c srcs/split.c \
-	  srcs/string_utils3.c srcs/algo_utils.c
+	  srcs/string_utils3.c srcs/algo_utils.c srcs/string_compare.c \
+	  srcs/string_math.c
 OBJ_DIR = objects
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 

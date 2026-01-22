@@ -24,22 +24,21 @@ t_dict	*create_empty_dictionary(void)
 	return (dict);
 }
 
-t_dict_pair	*create_entry(unsigned long key, char *value)
+t_dict_pair	*create_entry(char *key, char *value)
 {
 	t_dict_pair	*entry;
 
-	if (!value)
+	if (!value || !key)
 		return (NULL);
 	entry = malloc(sizeof(t_dict_pair));
 	if (!entry)
 		return (NULL);
-	entry->nbr = key;
+	entry->key = ft_strdup(key);
+	if (!entry->key)
+		return (free(entry), NULL);
 	entry->value = ft_strdup(value);
 	if (!entry->value)
-	{
-		free(entry);
-		return (NULL);
-	}
+		return (free(entry->key), free(entry), NULL);
 	entry->next = NULL;
 	return (entry);
 }
@@ -64,16 +63,16 @@ void	add_entry(t_dict *dict, t_dict_pair *entry)
 	dict->size++;
 }
 
-int	key_exists(t_dict *dict, unsigned long key)
+int	key_exists(t_dict *dict, char *key)
 {
 	t_dict_pair	*current;
 
-	if (!dict)
+	if (!dict || !key)
 		return (0);
 	current = dict->head;
 	while (current)
 	{
-		if (current->nbr == key)
+		if (ft_strcmp(current->key, key) == 0)
 			return (1);
 		current = current->next;
 	}
@@ -91,6 +90,7 @@ void	free_dictionary(t_dict *dict)
 	while (current)
 	{
 		next = current->next;
+		free(current->key);
 		free(current->value);
 		free(current);
 		current = next;
