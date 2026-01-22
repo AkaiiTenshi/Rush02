@@ -3,8 +3,10 @@ CC = gcc
 CFLAGS = -Wall -Werror -Wextra -g3
 INC = -I includes
 
-SRC = main.c parsing.c algo.c read_utils.c string_utils.c string_utils2.c \
-      line_foos.c dict_foos.c dict_pars.c split.c string_utils3.c algo_utils.c
+SRC = srcs/main.c srcs/parsing.c srcs/algo.c srcs/read_utils.c \
+	  srcs/string_utils.c srcs/string_utils2.c srcs/line_foos.c \
+	  srcs/dict_foos.c srcs/dict_pars.c srcs/split.c \
+	  srcs/string_utils3.c srcs/algo_utils.c
 OBJ_DIR = objects
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
@@ -12,7 +14,7 @@ all: $(NAME)
 
 # Création du dossier objects
 $(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR)/srcs
 
 
 # Compilation des .o dans objects/
