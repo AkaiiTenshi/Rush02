@@ -6,7 +6,7 @@
 /*   By: salsoysa <salsoysa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 20:43:15 by salsoysa          #+#    #+#             */
-/*   Updated: 2026/01/22 01:02:33 by salsoysa         ###   ########.fr       */
+/*   Updated: 2026/01/23 13:25:40 by salsoysa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ char					*get_zero_value(t_dict *dict);
 int						compare_number_strings(char *n1, char *n2);
 int						is_power_of_ten(char *str);
 char					*trim_leading_zeros(char *str);
+int						is_valid_scale(char *str);
 
 // String math (string_math.c)
 char					*divide_by_power_of_10(char *number, char *divisor);

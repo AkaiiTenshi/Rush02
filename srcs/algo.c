@@ -6,7 +6,7 @@
 /*   By: salsoysa <salsoysa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 20:43:10 by salsoysa          #+#    #+#             */
-/*   Updated: 2026/01/22 17:00:00 by salsoysa         ###   ########.fr       */
+/*   Updated: 2026/01/23 13:27:21 by salsoysa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ char	*find_largest_key_below(t_dict *dict, char *number)
 	current = dict->head;
 	while (current)
 	{
-		if (compare_number_strings(current->key, number) <= 0)
+		if (is_valid_scale(current->key) && compare_number_strings(current->key,
+				number) <= 0)
 		{
-			if (!best_key
-				|| compare_number_strings(current->key, best_key) > 0)
+			if (!best_key || compare_number_strings(current->key, best_key) > 0)
 				best_key = current->key;
 		}
 		current = current->next;

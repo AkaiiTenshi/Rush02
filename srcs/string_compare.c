@@ -6,7 +6,7 @@
 /*   By: salsoysa <salsoysa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 16:50:00 by salsoysa          #+#    #+#             */
-/*   Updated: 2026/01/22 16:50:00 by salsoysa         ###   ########.fr       */
+/*   Updated: 2026/01/23 13:25:04 by salsoysa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,21 @@ char	*trim_leading_zeros(char *str)
 	while (str[i] == '0' && str[i + 1])
 		i++;
 	return (ft_strdup(str + i));
+}
+
+int is_valid_scale(char *str)
+{
+    int len;
+    
+    if (!str)
+        return (0);
+    
+    if (is_power_of_ten(str))
+        return (1);
+    
+    len = ft_strlen(str);
+    if (len == 2 && str[1] == '0' && str[0] >= '2' && str[0] <= '9')
+        return (1);
+    
+    return (0);
 }
