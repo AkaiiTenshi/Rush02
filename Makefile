@@ -3,11 +3,13 @@ CC = gcc
 CFLAGS = -Wall -Werror -Wextra -g3
 INC = -I includes
 
-SRC = srcs/main.c srcs/parsing.c srcs/algo.c srcs/read_utils.c \
-	  srcs/string_utils.c srcs/string_utils2.c srcs/line_foos.c \
-	  srcs/dict_foos.c srcs/dict_pars.c srcs/split.c \
-	  srcs/string_utils3.c srcs/algo_utils.c srcs/string_compare.c \
-	  srcs/string_math.c
+SRC = srcs/main.c srcs/parsing.c srcs/algo_lookup.c srcs/algo_group.c \
+	  srcs/algo_count.c srcs/algo_split.c srcs/algo_words.c \
+	  srcs/algo_words_utils.c srcs/algo_zero.c srcs/algo_zero_helpers.c \
+	  srcs/read_utils.c \
+	  srcs/string_core.c srcs/string_alloc.c srcs/string_helpers.c \
+	  srcs/line_foos.c srcs/dict_foos.c srcs/dict_pars.c srcs/split.c \
+	  srcs/split_copy.c
 OBJ_DIR = objects
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
@@ -37,4 +39,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
-

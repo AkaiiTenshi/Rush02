@@ -12,6 +12,12 @@
 
 #include "rush02.h"
 
+static int	print_error(char *msg)
+{
+	write(2, msg, ft_strlen(msg));
+	return (1);
+}
+
 static t_dict	*load_dictionary(char *path)
 {
 	char	*file_content;
@@ -32,7 +38,7 @@ static int	process_number(char *nbr, t_dict *dict)
 	result = number_to_words(nbr, dict);
 	if (!result)
 		return (0);
-	ft_putstr_fd(result, 1);
+	write(1, result, ft_strlen(result));
 	write(1, "\n", 1);
 	free(result);
 	return (1);
@@ -45,15 +51,18 @@ int	main(int ac, char **av)
 	t_dict	*dict;
 
 	if (ac != 2 && ac != 3)
-		return (write(2, "Error\n", 6), 1);
+		return (print_error("Error\n"));
 	parse_args(ac, av, &path, &nbr);
-	if (!validate_nbr(nbr))
-		return (write(2, "Error\n", 6), 1);
+	if (!is_all_digits(nbr))
+		return (print_error("Error\n"));
 	dict = load_dictionary(path);
 	if (!dict)
-		return (write(2, "Dict Error\n", 11), 1);
+		return (print_error("Dict Error\n"));
 	if (!process_number(nbr, dict))
-		return (free_dictionary(dict), write(2, "Dict Error\n", 11), 1);
+	{
+		free_dictionary(dict);
+		return (print_error("Dict Error\n"));
+	}
 	free_dictionary(dict);
 	return (0);
 }

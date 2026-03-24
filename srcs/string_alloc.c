@@ -1,16 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string_utils3.c                                    :+:      :+:    :+:   */
+/*   string_alloc.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: salsoysa <salsoysa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/21 22:36:24 by salsoysa          #+#    #+#             */
-/*   Updated: 2026/01/22 00:23:33 by salsoysa         ###   ########.fr       */
+/*   Created: 2026/03/24 12:00:00 by salsoysa          #+#    #+#             */
+/*   Updated: 2026/03/24 12:00:00 by salsoysa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rush02.h"
+
+char	*ft_strdup(const char *s)
+{
+	char	*str;
+	size_t	i;
+
+	if (!s)
+		return (NULL);
+	str = malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (s[i])
+	{
+		str[i] = s[i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
+}
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
@@ -34,13 +54,6 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	str[i] = '\0';
 	return (str);
-}
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	if (!s)
-		return ;
-	write(fd, s, ft_strlen(s));
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
@@ -70,21 +83,24 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-int	ft_strcmp(const char *s1, const char *s2)
+char	*ft_strtrim(char const *s1, char const *set)
 {
-	size_t	i;
+	size_t	start;
+	size_t	end;
+	char	*str;
 
-	i = 0;
-	if (!s1 || !s2)
-		return (-1);
-	while (s1[i] && s2[i] && s1[i] == s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
-
-int	ft_isdigit(int i)
-{
-	if (i <= '9' && i >= '0')
-		return (1);
-	return (0);
+	if (!s1 || !set)
+		return (NULL);
+	start = 0;
+	end = ft_strlen(s1);
+	while (s1[start] && ft_strchr(set, s1[start]))
+		start++;
+	while (start < end && ft_strchr(set, s1[end - 1]))
+		end--;
+	str = malloc(sizeof(char) * (end - start + 1));
+	if (!str)
+		return (NULL);
+	ft_memcpy(str, s1 + start, end - start);
+	str[end - start] = '\0';
+	return (str);
 }

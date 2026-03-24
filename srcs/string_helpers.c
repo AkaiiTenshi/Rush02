@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string_utils2.c                                    :+:      :+:    :+:   */
+/*   string_helpers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: salsoysa <salsoysa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/21 22:36:24 by salsoysa          #+#    #+#             */
-/*   Updated: 2026/01/22 17:38:32 by salsoysa         ###   ########.fr       */
+/*   Created: 2026/03/24 12:00:00 by salsoysa          #+#    #+#             */
+/*   Updated: 2026/03/24 12:00:00 by salsoysa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,41 +28,10 @@ int	is_all_digits(char *str)
 	return (1);
 }
 
-unsigned long	str_to_ulong(char *str)
-{
-	unsigned long long	result;
-	int					i;
-
-	if (!str)
-		return (0);
-	result = 0;
-	i = 0;
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		result = result * 10 + (str[i] - '0');
-		i++;
-	}
-	return (result);
-}
-
-char	*join_with_space(char *s1, char *s2)
+char	*append_with_space(char *result, char *new_part)
 {
 	char	*temp;
-	char	*result;
-
-	if (!s1 || !s2)
-		return (NULL);
-	temp = ft_strjoin(s1, " ");
-	if (!temp)
-		return (NULL);
-	result = ft_strjoin(temp, s2);
-	free(temp);
-	return (result);
-}
-
-char	*append_part(char *result, char *new_part)
-{
-	char	*temp;
+	char	*with_space;
 
 	if (!new_part)
 	{
@@ -74,7 +43,26 @@ char	*append_part(char *result, char *new_part)
 		free(result);
 		return (ft_strdup(new_part));
 	}
-	temp = join_with_space(result, new_part);
+	with_space = ft_strjoin(result, " ");
+	if (!with_space)
+	{
+		free(result);
+		return (NULL);
+	}
+	temp = ft_strjoin(with_space, new_part);
+	free(with_space);
 	free(result);
 	return (temp);
+}
+
+char	*trim_leading_zeros(char *str)
+{
+	int	i;
+
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (str[i] == '0' && str[i + 1])
+		i++;
+	return (ft_strdup(str + i));
 }

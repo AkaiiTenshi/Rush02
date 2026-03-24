@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   string_utils.c                                     :+:      :+:    :+:   */
+/*   string_core.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: salsoysa <salsoysa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/21 22:26:26 by salsoysa          #+#    #+#             */
-/*   Updated: 2026/01/22 12:11:30 by salsoysa         ###   ########.fr       */
+/*   Created: 2026/03/24 12:00:00 by salsoysa          #+#    #+#             */
+/*   Updated: 2026/03/24 12:00:00 by salsoysa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,59 +40,38 @@ char	*ft_strchr(const char *s, int c)
 
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	size_t			i;
-	unsigned char	*str;
-	unsigned char	*ptr;
+	size_t			idx;
+	unsigned char	*d;
+	unsigned char	*s;
 
-	ptr = (unsigned char *)src;
-	str = (unsigned char *)dest;
-	i = 0;
 	if (!dest && !src)
 		return (NULL);
-	while (i < n)
+	d = (unsigned char *)dest;
+	s = (unsigned char *)src;
+	idx = 0;
+	while (idx < n)
 	{
-		str[i] = ptr[i];
-		i++;
+		d[idx] = s[idx];
+		idx++;
 	}
 	return (dest);
 }
 
-char	*ft_strtrim(char const *s1, char const *set)
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	size_t	i;
-	size_t	k;
-	char	*str;
 
+	if (!s1 || !s2)
+		return (-1);
 	i = 0;
-	if (!s1)
-		return (NULL);
-	k = ft_strlen(s1);
-	while (s1[i] && ft_strchr(set, s1[i]))
+	while (s1[i] && s2[i] && s1[i] == s2[i])
 		i++;
-	while (i < k && ft_strchr(set, s1[k - 1]))
-		k--;
-	str = (char *)malloc(sizeof(char) * (k - i + 1));
-	if (!str)
-		return (NULL);
-	ft_memcpy(str, s1 + i, k - i + 1);
-	str[k - i] = '\0';
-	return (str);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
 
-char	*ft_strdup(const char *s)
+int	ft_isdigit(int i)
 {
-	char	*str;
-	size_t	i;
-
-	str = malloc(sizeof(char) * (ft_strlen(s) + 1));
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (s[i])
-	{
-		str[i] = s[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
+	if (i <= '9' && i >= '0')
+		return (1);
+	return (0);
 }

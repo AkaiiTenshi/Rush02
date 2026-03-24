@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   algo_count.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: salsoysa <salsoysa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/21 20:43:29 by salsoysa          #+#    #+#             */
-/*   Updated: 2026/01/21 22:06:38 by salsoysa         ###   ########.fr       */
+/*   Created: 2026/03/24 12:00:00 by salsoysa          #+#    #+#             */
+/*   Updated: 2026/03/24 12:00:00 by salsoysa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rush02.h"
-#include <fcntl.h>
 
-void	parse_args(int ac, char **av, char **path, char **nbr)
+int	count_split_groups(char **groups)
 {
-	if (ac == 2)
-	{
-		*path = "rush02-numbers.dict";
-		*nbr = av[1];
-	}
-	else if (ac == 3)
-	{
-		*path = av[1];
-		*nbr = av[2];
-	}
+	int	i;
+
+	i = 0;
+	while (groups[i])
+		i++;
+	return (i);
 }
-
-

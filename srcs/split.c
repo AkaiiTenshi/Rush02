@@ -41,32 +41,25 @@ static int	count_words(char *str, char c)
 	return (count);
 }
 
-static int	ft_dup(char **newstr, char *str, char c, int len)
+static int	alloc_words(char const *s, char c, int len, char ***newstr)
 {
-	int	d;
-	int	u;
-	int	p;
+	int	i;
 
-	d = 0;
-	u = -1;
-	while (++u < len)
+	i = 0;
+	*newstr = (char **)malloc(sizeof(char *) * (len + 1));
+	if (!*newstr)
+		return (0);
+	while (i < len)
 	{
-		while (str[d] == c && str[d])
-			d++;
-		p = 0;
-		while (str[d + p] != c && str[d + p])
-			p++;
-		newstr[u] = (char *)malloc(sizeof(char) * (p + 1));
-		if (!newstr[u])
-		{
-			ft_free(newstr, u);
-			return (0);
-		}
-		p = 0;
-		while (str[d] != c && str[d])
-			newstr[u][p++] = str[d++];
-		newstr[u][p] = '\0';
+		(*newstr)[i] = NULL;
+		i++;
 	}
+	if (!fill_words(*newstr, (char *)s, c, len))
+	{
+		ft_free(*newstr, len - 1);
+		return (0);
+	}
+	(*newstr)[len] = NULL;
 	return (1);
 }
 
@@ -78,11 +71,22 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	len = count_words((char *)s, c);
-	newstr = (char **)malloc(sizeof(char *) * (len + 1));
-	if (!newstr)
+	if (!alloc_words(s, c, len, &newstr))
 		return (NULL);
-	if (!ft_dup(newstr, (char *)s, c, len))
-		return (NULL);
-	newstr[len] = NULL;
 	return (newstr);
+}
+
+void	free_split(char **split)
+{
+	int	i;
+
+	if (!split)
+		return ;
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
 }

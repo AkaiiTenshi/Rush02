@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   algo_zero.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: salsoysa <salsoysa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/21 20:43:29 by salsoysa          #+#    #+#             */
-/*   Updated: 2026/01/21 22:06:38 by salsoysa         ###   ########.fr       */
+/*   Created: 2026/03/24 12:00:00 by salsoysa          #+#    #+#             */
+/*   Updated: 2026/03/24 12:00:00 by salsoysa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rush02.h"
-#include <fcntl.h>
 
-void	parse_args(int ac, char **av, char **path, char **nbr)
+int	is_zero_value(char *str)
 {
-	if (ac == 2)
+	int	i;
+
+	if (!str || !str[0])
+		return (1);
+	i = 0;
+	while (str[i])
 	{
-		*path = "rush02-numbers.dict";
-		*nbr = av[1];
+		if (str[i] != '0')
+			return (0);
+		i++;
 	}
-	else if (ac == 3)
-	{
-		*path = av[1];
-		*nbr = av[2];
-	}
+	return (1);
 }
-
-

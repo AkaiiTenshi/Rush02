@@ -23,20 +23,30 @@ static int	file_size(char *path)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (-1);
-	while (1)
+	bytes = read(fd, temp, 1024);
+	while (bytes > 0)
 	{
-		bytes = read(fd, temp, 1024);
-		if (bytes < 0)
-		{
-			close(fd);
-			return (-1);
-		}
-		if (bytes == 0)
-			break ;
 		size = size + bytes;
+		bytes = read(fd, temp, 1024);
+	}
+	if (bytes < 0)
+	{
+		close(fd);
+		return (-1);
 	}
 	close(fd);
 	return (size);
+}
+
+static char	*empty_file(void)
+{
+	char	*file;
+
+	file = malloc(1);
+	if (!file)
+		return (NULL);
+	file[0] = '\0';
+	return (file);
 }
 
 static char	*file_alloc(int fd, int size, int total_read)
@@ -77,13 +87,7 @@ char	*read_dict(char *path)
 	if (size < 0)
 		return (NULL);
 	if (size == 0)
-	{
-		file = malloc(1);
-		if (!file)
-			return (NULL);
-		file[0] = '\0';
-		return (file);
-	}
+		return (empty_file());
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (NULL);

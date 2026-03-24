@@ -20,7 +20,6 @@ t_dict	*create_empty_dictionary(void)
 	if (!dict)
 		return (NULL);
 	dict->head = NULL;
-	dict->size = 0;
 	return (dict);
 }
 
@@ -28,6 +27,7 @@ t_dict_pair	*create_entry(char *key, char *value)
 {
 	t_dict_pair	*entry;
 
+	entry = NULL;
 	if (!value || !key)
 		return (NULL);
 	entry = malloc(sizeof(t_dict_pair));
@@ -35,12 +35,29 @@ t_dict_pair	*create_entry(char *key, char *value)
 		return (NULL);
 	entry->key = ft_strdup(key);
 	if (!entry->key)
-		return (free(entry), NULL);
+	{
+		free_entry(entry);
+		return (NULL);
+	}
 	entry->value = ft_strdup(value);
 	if (!entry->value)
-		return (free(entry->key), free(entry), NULL);
+	{
+		free_entry(entry);
+		return (NULL);
+	}
 	entry->next = NULL;
 	return (entry);
+}
+
+void	free_entry(t_dict_pair *entry)
+{
+	if (!entry)
+		return ;
+	if (entry->key)
+		free(entry->key);
+	if (entry->value)
+		free(entry->value);
+	free(entry);
 }
 
 void	add_entry(t_dict *dict, t_dict_pair *entry)
@@ -50,9 +67,7 @@ void	add_entry(t_dict *dict, t_dict_pair *entry)
 	if (!dict || !entry)
 		return ;
 	if (!dict->head)
-	{
 		dict->head = entry;
-	}
 	else
 	{
 		current = dict->head;
@@ -60,7 +75,6 @@ void	add_entry(t_dict *dict, t_dict_pair *entry)
 			current = current->next;
 		current->next = entry;
 	}
-	dict->size++;
 }
 
 int	key_exists(t_dict *dict, char *key)
